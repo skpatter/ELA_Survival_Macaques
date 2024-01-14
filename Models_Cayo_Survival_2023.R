@@ -67,6 +67,21 @@ cayo_early_index <- brm(ExitFourYr | cens(CensorFour) ~ (1 | Birth.Season) + (1 
                                 iter = 2000, warmup = 1000, chains = 3,
                                 family = weibull() )
 
+# model comparisons #
+
+cayo_adults1_fullrank_waic <- add_criterion(cayo_adults1_fullrank, "loo")
+cayo_adults_index_fullrank_waic <- add_criterion(cayo_adults_index_fullrank, "loo")
+
+adultWAIC <- loo_compare(cayo_adults1_fullrank_waic,
+                         cayo_adults_index_fullrank_waic,
+                         criterion = "loo")
+
+cayo_early_fullrank_waic <- add_criterion(cayo_early_fullrank, "loo")
+cayo_early_indexfullrank_waic <- add_criterion(cayo_early_indexfullrank, "loo")
+
+earlyWAIC <- loo_compare(cayo_early_fullrank_waic,
+                         cayo_early_indexfullrank_waic,
+                         criterion = "loo")
 
 
 # maternal social connectedness #
